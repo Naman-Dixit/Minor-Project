@@ -1,0 +1,810 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\textbf{MNIST Digit Classification Using Federated CNN with
+Nature-Inspired Feature Selection}
+
+\emph{A}
+
+\emph{\textbf{Project Report}}
+
+\emph{submitted in partial fulfillment of the}
+
+\emph{requirements for the award of the degree of}
+
+\textbf{BACHELOR OF TECHNOLOGY}
+
+in
+
+\textbf{COMPUTER SCIENCE \& ENGINEERING}
+
+by
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Name}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Roll No.}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Varchasva Choudhary & R2142231573 \\
+Naman Dixit & R2142231696 \\
+Charvi Agarwal & R2142231186 \\
+Kartik Goyal & R2142231215 \\
+\end{longtable}
+
+\emph{under the guidance of}
+
+\textbf{Narita Sarkar}
+
+\includegraphics[width=1.29167in,height=1.29167in]{media/image1.jpeg}
+
+\textbf{School of Computer Science}
+
+\textbf{University of Petroleum \& Energy Studies}
+
+\textbf{Bidholi, Via Prem Nagar, Dehradun, Uttarakhand}
+
+\textbf{May -- 2025}
+
+\hypertarget{candidates-declaration}{%
+\section{CANDIDATE\textquotesingle S
+DECLARATION}\label{candidates-declaration}}
+
+We hereby certify that the project work entitled \textbf{"MNIST Digit
+Classification Using Federated CNN with Nature-Inspired Feature
+Selection"} in partial fulfilment of the requirements for the award of
+the Degree of BACHELOR OF TECHNOLOGY in COMPUTER SCIENCE AND ENGINEERING
+and submitted to the Department of Systemics, School of Computer
+Science, University of Petroleum \& Energy Studies, Dehradun, is an
+authentic record of our work carried out during the period from January,
+2025 to May, 2025 under the supervision of \textbf{Narita Sarkar mam.}
+
+The matter presented in this project has not been submitted by us for
+the award of any other degree of this or any other University.
+
+\textbf{(Varchasva Choudhary, Naman Dixit, Charvi Agarwal, Kartik
+Goyal)}
+
+This is to certify that the above statement made by the candidates is
+correct to the best of my knowledge.
+
+Date: 5 May 2025 \textbf{Narita Sarkar}
+
+\emph{Project Guide}
+
+\hypertarget{acknowledgement}{%
+\section{ACKNOWLEDGEMENT}\label{acknowledgement}}
+
+We wish to express our deep gratitude to our guide {[}Name{]}, for all
+the advice, encouragement, and constant support provided throughout this
+project work. This work would not have been possible without their
+invaluable guidance and constructive suggestions.
+
+We sincerely thank {[}Name of HoD{]}, Head of the Department of Computer
+Science, for the great support extended in carrying out this project and
+for providing all the necessary infrastructure and resources.
+
+We are also grateful to the Dean, School of Computer Science, UPES, for
+providing the necessary facilities to carry out our project work
+successfully. We also thank our Course Coordinator and Activity
+Coordinator for providing timely support and information during the
+completion of this project.
+
+We would like to thank all our friends for their help and constructive
+criticism during our project work. Finally, we have no words to express
+our sincere gratitude to our parents for their unconditional support and
+encouragement throughout.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1994}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1994}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1994}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1994}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2023}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Name}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Varchasva Choudhary
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Naman Dixit
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Charvi Agarwal
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kartik Goyal
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Roll No.} & R2142231573 & R2142231696 & R2142231186 &
+R2142231215 \\
+\end{longtable}
+
+\hypertarget{abstract}{%
+\section{ABSTRACT}\label{abstract}}
+
+This project presents a comprehensive study of MNIST handwritten digit
+classification using a Federated Convolutional Neural Network (FedCNN)
+integrated with nature-inspired wrapper-based feature selection
+algorithms. The system combines privacy-preserving federated learning
+with intelligent feature selection to achieve high classification
+accuracy with reduced feature dimensionality.
+
+The Federated CNN architecture distributes training across five
+simulated clients using a Reinforcement Learning (RL)-based Q-Agent for
+intelligent client selection in each communication round. After
+federated training, the global model extracts 128-dimensional deep
+feature representations from the MNIST dataset. These features are then
+subjected to three nature-inspired metaheuristic optimization
+algorithms: Genetic Algorithm (GenA\_Conv), Grey Wolf Optimizer
+(GreyW\_Conv), and Particle Swarm Optimization (ParticleS\_Conv), which
+serve as wrapper-based feature selectors to identify the most
+discriminative subset of CNN features.
+
+The system is evaluated across five different train-test splits (65:35,
+70:30, 75:25, 80:20, 85:15) and benchmarked against a Baseline Logistic
+Regression model (using raw 784-pixel features) and Conv\_NN (using all
+128 CNN features without selection). Performance metrics including
+Accuracy, Precision, Recall, and F1-Score are compared using heatmaps,
+convergence plots, confusion matrices, correlation heatmaps, and
+SHAP-based interpretability analysis.
+
+Results demonstrate that nature-inspired feature selection methods,
+particularly PSO and GWO, achieve competitive or superior classification
+accuracy compared to the full feature set while significantly reducing
+feature dimensionality --- improving model interpretability, efficiency,
+and generalization.
+
+\hypertarget{table-of-contents}{%
+\section{TABLE OF CONTENTS}\label{table-of-contents}}
+
+\textbf{S.No. Contents Page No.}
+
+1. Introduction 1
+
+1.1 Background and Motivation 1
+
+1.2 Problem Statement 2
+
+1.3 Objectives 2
+
+2. System Analysis 3
+
+2.1 Existing Systems 3
+
+2.2 Proposed System 4
+
+2.3 Modules Description 5
+
+3. Design 6
+
+3.1 System Architecture 6
+
+3.2 FedCNN Architecture 7
+
+3.3 Optimizer Designs 8
+
+4. Implementation 9
+
+4.1 Data Preprocessing 9
+
+4.2 Federated Training 10
+
+4.3 Feature Extraction \& Selection 11
+
+5. Results and Discussion 12
+
+5.1 Performance Metrics 12
+
+5.2 Comparative Analysis 13
+
+5.3 Best Method Selection 14
+
+6. Conclusion and Future Work 15
+
+References 16
+
+\hypertarget{introduction}{%
+\section{1. INTRODUCTION}\label{introduction}}
+
+\hypertarget{background-and-motivation}{%
+\subsection{1.1 Background and
+Motivation}\label{background-and-motivation}}
+
+Handwritten digit recognition remains a fundamental benchmark problem in
+the field of machine learning and computer vision. The MNIST dataset,
+comprising 70,000 grayscale images of handwritten digits (0--9) at 28×28
+pixel resolution, has served as the standard testbed for evaluating
+classification algorithms for decades. While conventional deep learning
+approaches achieve near-human accuracy on MNIST, modern challenges
+demand solutions that simultaneously address privacy concerns, model
+interpretability, and computational efficiency.
+
+Federated Learning (FL) has emerged as a privacy-preserving distributed
+machine learning paradigm wherein model training is performed across
+multiple decentralized clients without sharing raw data. This is
+particularly relevant in healthcare, finance, and mobile applications,
+where data privacy is paramount. Combining FL with deep Convolutional
+Neural Networks (CNNs) leverages the feature extraction power of CNNs
+while preserving the privacy guarantees of federated training.
+
+Feature selection is a critical step in machine learning pipelines.
+Nature-inspired metaheuristic algorithms --- including Genetic
+Algorithms (GA), Grey Wolf Optimizer (GWO), and Particle Swarm
+Optimization (PSO) --- have demonstrated remarkable effectiveness as
+wrapper-based feature selectors. These methods treat feature selection
+as a combinatorial optimization problem, searching for the optimal
+feature subset that maximizes classification performance while
+minimizing the number of selected features.
+
+\hypertarget{problem-statement}{%
+\subsection{1.2 Problem Statement}\label{problem-statement}}
+
+Standard CNN-based approaches for MNIST classification train models on
+centralized data, which raises privacy concerns in real-world
+deployments. Moreover, raw CNN feature representations (e.g.,
+128-dimensional embeddings) may contain redundant or irrelevant
+dimensions that add computational overhead without contributing to
+classification accuracy. There exists a need for a unified framework
+that:
+
+\begin{itemize}
+\item
+  Enables privacy-preserving distributed training across multiple
+  clients.
+\item
+  Intelligently selects the most informative CNN feature dimensions.
+\item
+  Benchmarks multiple optimization strategies across varying train-test
+  splits.
+\item
+  Provides interpretable insights into which features drive
+  classification decisions.
+\end{itemize}
+
+\hypertarget{objectives}{%
+\subsection{1.3 Objectives}\label{objectives}}
+
+The primary objectives of this project are:
+
+\begin{itemize}
+\item
+  To design and implement a Federated CNN (FedCNN) for MNIST digit
+  classification using a Q-Agent for RL-based client selection.
+\item
+  To extract 128-dimensional deep feature embeddings from the trained
+  global FedCNN model.
+\item
+  To implement three nature-inspired wrapper feature selectors: Genetic
+  Algorithm (GenA\_Conv), Grey Wolf Optimizer (GreyW\_Conv), and
+  Particle Swarm Optimization (ParticleS\_Conv).
+\item
+  To evaluate all four methods --- Conv\_NN, GenA\_Conv, GreyW\_Conv,
+  ParticleS\_Conv --- across five train-test splits using Accuracy,
+  Precision, Recall, and F1-Score.
+\item
+  To perform SHAP-based interpretability analysis on the best-performing
+  method.
+\item
+  To identify the optimal feature selection strategy through composite
+  scoring.
+\end{itemize}
+
+\hypertarget{system-analysis}{%
+\section{2. SYSTEM ANALYSIS}\label{system-analysis}}
+
+\hypertarget{existing-systems}{%
+\subsection{2.1 Existing Systems}\label{existing-systems}}
+
+Traditional approaches to MNIST classification include Support Vector
+Machines (SVM), k-Nearest Neighbors (k-NN), and simple Multilayer
+Perceptrons (MLP). While these methods achieved reasonable accuracy,
+they require centralized data storage and use raw pixel features, which
+are high-dimensional and redundant.
+
+Deep learning approaches --- particularly CNNs --- have pushed MNIST
+accuracy beyond 99\%. However, standard CNN training centralizes all
+client data, making it unsuitable for privacy-sensitive applications.
+Feature selection methods such as Principal Component Analysis (PCA)
+reduce dimensionality but are unsupervised and may discard
+class-discriminative information.
+
+Existing federated learning frameworks (e.g., FedAvg) aggregate model
+weights from clients but do not incorporate intelligent client selection
+or combine feature optimization with federated training. The limitations
+of existing systems motivated the development of the proposed integrated
+framework.
+
+\hypertarget{proposed-system}{%
+\subsection{2.2 Proposed System}\label{proposed-system}}
+
+The proposed system integrates three major components: Federated CNN
+training with RL-based client selection, CNN feature extraction, and
+nature-inspired wrapper feature selection. The workflow proceeds as
+follows:
+
+First, the MNIST dataset is preprocessed using normalization,
+standardization, and threshold-based denoising. The data is divided into
+five simulated federated clients. A Q-Agent selects the top-3 clients
+per federated round based on validation accuracy rewards. Local CNN
+models are trained for one epoch per client, and their weights are
+aggregated using Federated Averaging (FedAvg). This process repeats for
+five federated rounds.
+
+After federated training, the global FedCNN model serves as a feature
+extractor, producing 128-dimensional embeddings per sample. These
+embeddings are then input to three nature-inspired optimizers (GA, GWO,
+PSO), each acting as a wrapper to select the most informative feature
+subset. A Logistic Regression classifier is trained on the selected
+features for each method. Finally, all methods are evaluated across five
+train-test splits using standard classification metrics.
+
+\hypertarget{modules-description}{%
+\subsection{2.3 Modules Description}\label{modules-description}}
+
+\hypertarget{data-preprocessing-module}{%
+\subsubsection{2.3.1 Data Preprocessing
+Module}\label{data-preprocessing-module}}
+
+The MNIST dataset (70,000 samples, 784 features each) is fetched using
+scikit-learn\textquotesingle s fetch\_openml API. Pixel values are
+normalized to {[}0, 1{]}, standardized using z-score normalization, and
+binarized using a threshold of 0.3 to reduce noise. This preprocessing
+pipeline ensures consistent input distributions across all experiments.
+
+\hypertarget{federated-cnn-training-module}{%
+\subsubsection{2.3.2 Federated CNN Training
+Module}\label{federated-cnn-training-module}}
+
+The FedCNN architecture consists of two convolutional blocks (Conv2D →
+BatchNorm → ReLU → MaxPool), followed by a 128-unit dense feature layer
+with Dropout(0.5) and a 10-class output layer. Training is distributed
+across 5 clients with a Q-Agent selecting 3 clients per round based on
+validation accuracy rewards. FedAvg aggregates client weights after each
+round.
+
+\hypertarget{feature-extraction-module}{%
+\subsubsection{2.3.3 Feature Extraction
+Module}\label{feature-extraction-module}}
+
+The trained global FedCNN model is used to extract 128-dimensional
+feature vectors from train and test sets. These CNN features serve as
+the input space for subsequent classifier training and
+optimization-based feature selection.
+
+\hypertarget{nature-inspired-feature-selection-module}{%
+\subsubsection{2.3.4 Nature-Inspired Feature Selection
+Module}\label{nature-inspired-feature-selection-module}}
+
+Three metaheuristic algorithms are implemented as wrapper feature
+selectors. Each algorithm evaluates candidate feature subsets by
+training a Logistic Regression classifier and measuring validation
+accuracy as the fitness score. The Genetic Algorithm (GA) uses
+selection, crossover, and mutation operators. Grey Wolf Optimizer (GWO)
+mimics the hierarchical hunting behaviour of grey wolves. Particle Swarm
+Optimization (PSO) models social behaviour of particles converging on
+global optima.
+
+\hypertarget{design}{%
+\section{3. DESIGN}\label{design}}
+
+\hypertarget{system-architecture}{%
+\subsection{3.1 System Architecture}\label{system-architecture}}
+
+The overall system architecture follows a sequential pipeline: raw MNIST
+data → preprocessing → federated client distribution → RL-based client
+selection → local CNN training → FedAvg aggregation → global model
+evaluation → 128-D feature extraction → nature-inspired feature
+selection (GA / GWO / PSO) → Logistic Regression classification →
+multi-split evaluation → SHAP interpretability.
+
+The federated component ensures data privacy by never sharing raw
+training data between clients or with the central server. Only model
+weight updates are communicated. The RL-based Q-Agent adds an adaptive
+layer that preferentially selects high-performing clients in subsequent
+rounds, improving convergence efficiency.
+
+\hypertarget{fedcnn-architecture}{%
+\subsection{3.2 FedCNN Architecture}\label{fedcnn-architecture}}
+
+The FedCNN consists of the following layers:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3324}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3324}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3353}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Layer}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Configuration}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Output Shape}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Conv2D + BN + ReLU & 32 filters, 3×3 kernel, padding=1 & 32 × 28 × 28 \\
+MaxPool2D & 2×2 & 32 × 14 × 14 \\
+Conv2D + BN + ReLU & 64 filters, 3×3 kernel, padding=1 & 64 × 14 × 14 \\
+MaxPool2D & 2×2 & 64 × 7 × 7 \\
+Flatten & --- & 3136 \\
+Linear + ReLU + Dropout & 128 units, p=0.5 & 128 (feature vector) \\
+Linear (classifier) & 10 classes & 10 \\
+\end{longtable}
+
+\hypertarget{optimizer-designs}{%
+\subsection{3.3 Optimizer Designs}\label{optimizer-designs}}
+
+\hypertarget{genetic-algorithm-gena_conv}{%
+\subsubsection{3.3.1 Genetic Algorithm
+(GenA\_Conv)}\label{genetic-algorithm-gena_conv}}
+
+The GA encodes candidate feature subsets as binary chromosomes of length
+128. Fitness is measured as Logistic Regression accuracy on the
+validation set. The GA applies tournament selection, single-point
+crossover, and bit-flip mutation over multiple generations, maintaining
+a population of candidate solutions that evolve towards optimal feature
+subsets.
+
+\hypertarget{grey-wolf-optimizer-greyw_conv}{%
+\subsubsection{3.3.2 Grey Wolf Optimizer
+(GreyW\_Conv)}\label{grey-wolf-optimizer-greyw_conv}}
+
+GWO models the social hierarchy of grey wolves: alpha (best solution),
+beta (second-best), and delta (third-best) guide the search. Candidate
+wolves (solutions) update their positions based on the influence of
+alpha, beta, and delta, enabling balanced exploration and exploitation
+in the feature selection search space.
+
+\hypertarget{particle-swarm-optimization-particles_conv}{%
+\subsubsection{3.3.3 Particle Swarm Optimization
+(ParticleS\_Conv)}\label{particle-swarm-optimization-particles_conv}}
+
+PSO maintains a swarm of particles, each representing a candidate
+feature subset. Each particle updates its velocity and position based on
+its personal best and the global best solution found by the swarm. The
+inertia weight and cognitive/social coefficients are tuned to balance
+exploration and exploitation, converging to the globally optimal feature
+subset.
+
+\hypertarget{implementation}{%
+\section{4. IMPLEMENTATION}\label{implementation}}
+
+\hypertarget{data-preprocessing}{%
+\subsection{4.1 Data Preprocessing}\label{data-preprocessing}}
+
+The MNIST dataset was fetched using scikit-learn\textquotesingle s
+fetch\_openml API, yielding X ∈ ℝ\^{}(70000×784) and labels y ∈
+\{0,...,9\}. The preprocessing pipeline consists of three steps:
+
+\begin{itemize}
+\item
+  Normalization: X\_scaled = X / 255.0, mapping pixel intensities to
+  {[}0, 1{]}.
+\item
+  Standardization: X\_scaled = (X\_scaled − μ) / σ, where μ and σ are
+  the global mean and standard deviation.
+\item
+  Denoising: Binary thresholding at 0.3 --- pixels with standardized
+  value \textgreater{} 0.3 are set to 1.0, others to 0.0.
+\end{itemize}
+
+Five train-test splits were defined: 65:35, 70:30, 75:25, 80:20, and
+85:15. Stratified splitting ensures class balance across splits. All
+experiments use random\_state=42 for reproducibility.
+
+\hypertarget{federated-training}{%
+\subsection{4.2 Federated Training}\label{federated-training}}
+
+The federated training pipeline proceeds as follows:
+
+\begin{itemize}
+\item
+  The training set (80:20 split) is partitioned into 5 equal-sized
+  client datasets using non-overlapping contiguous segments.
+\item
+  A Q-Agent (ClientSelectorQAgent) maintains a Q-table of size 5
+  initialized to zeros. In each federated round, the top-3 clients are
+  selected based on descending Q-table values.
+\item
+  Selected clients train local deep-copies of the global FedCNN model
+  for 1 epoch using Adam optimizer (lr=0.001) and CrossEntropyLoss.
+\item
+  Local model performance on a held-out validation set (15\% of training
+  data) provides the reward signal for Q-table updates.
+\item
+  FedAvg computes the element-wise mean of client state dictionaries to
+  update the global model.
+\item
+  This process repeats for 5 federated rounds, after which the global
+  model achieves stable classification performance.
+\end{itemize}
+
+\hypertarget{feature-extraction-and-selection}{%
+\subsection{4.3 Feature Extraction and
+Selection}\label{feature-extraction-and-selection}}
+
+The trained global FedCNN model is used to extract 128-dimensional
+feature embeddings from all train and test samples using the
+feature\_layer output (before the final classifier). These CNN features
+capture high-level visual representations learned during federated
+training.
+
+The three nature-inspired optimizers are then applied as wrapper
+selectors on the 128-dimensional feature space:
+
+\begin{itemize}
+\item
+  GenA\_Conv (GA): Binary chromosome representation; fitness = LR
+  validation accuracy; operators: tournament selection, single-point
+  crossover, bit-flip mutation.
+\item
+  GreyW\_Conv (GWO): Alpha-beta-delta hierarchy; position updates model
+  grey wolf pack hunting convergence on optimal feature subsets.
+\item
+  ParticleS\_Conv (PSO): Swarm of particles; velocity and position
+  updates based on personal best and global best; inertia weight
+  linearly decreasing from 0.9 to 0.4.
+\end{itemize}
+
+For each optimizer, the selected feature indices are used to train a
+final Logistic Regression classifier (max\_iter=1000, lbfgs solver),
+which is evaluated on the held-out test set. Experiments are repeated
+across all five train-test splits.
+
+\hypertarget{results-and-discussion}{%
+\section{5. RESULTS AND DISCUSSION}\label{results-and-discussion}}
+
+\hypertarget{performance-metrics}{%
+\subsection{5.1 Performance Metrics}\label{performance-metrics}}
+
+All methods are evaluated using four standard classification metrics:
+Accuracy, Precision (weighted), Recall (weighted), and F1-Score
+(weighted). These metrics are computed using
+scikit-learn\textquotesingle s accuracy\_score, precision\_score,
+recall\_score, and f1\_score functions with zero\_division=0 and
+average=\textquotesingle weighted\textquotesingle{} to handle class
+imbalance appropriately.
+
+\hypertarget{comparative-analysis}{%
+\subsection{5.2 Comparative Analysis}\label{comparative-analysis}}
+
+The following observations are drawn from the multi-split comparative
+evaluation:
+
+\hypertarget{baseline-logistic-regression}{%
+\subsubsection{5.2.1 Baseline Logistic
+Regression}\label{baseline-logistic-regression}}
+
+The baseline Logistic Regression, trained on all 784 raw pixel features,
+serves as the lower-bound reference. Despite using all available input
+information, the linear model struggles to capture non-linear digit
+patterns inherent in raw pixel space, yielding modest accuracy across
+all splits.
+
+\hypertarget{conv_nn-all-128-cnn-features}{%
+\subsubsection{5.2.2 Conv\_NN (All 128 CNN
+Features)}\label{conv_nn-all-128-cnn-features}}
+
+Training Logistic Regression on all 128 CNN features extracted from the
+FedCNN substantially improves over the baseline, confirming that
+federated deep feature extraction captures discriminative visual
+representations. Accuracy remains consistent across train-test splits,
+indicating low variance.
+
+\hypertarget{gena_conv-greyw_conv-particles_conv}{%
+\subsubsection{5.2.3 GenA\_Conv, GreyW\_Conv,
+ParticleS\_Conv}\label{gena_conv-greyw_conv-particles_conv}}
+
+All three nature-inspired selectors achieve competitive accuracy to
+Conv\_NN while selecting a fraction of the 128 available features. GWO
+and PSO tend to achieve the highest fitness scores with fewer features,
+demonstrating superior exploration-exploitation balance. The GA
+converges reliably but may select slightly more features to achieve
+similar accuracy. Convergence plots illustrate that all three optimizers
+show monotonically increasing fitness trends, confirming proper
+convergence behaviour.
+
+Confusion matrices across all four methods confirm that digit classes
+such as \textquotesingle1\textquotesingle{} and
+\textquotesingle0\textquotesingle{} are classified with highest
+precision, while \textquotesingle4\textquotesingle{} and
+\textquotesingle9\textquotesingle{} exhibit the most inter-class
+confusion --- consistent with their visual similarity.
+
+\hypertarget{best-method-selection}{%
+\subsection{5.3 Best Method Selection}\label{best-method-selection}}
+
+A composite scoring methodology is used to objectively rank all four
+methods. The composite score is defined as:
+
+\emph{\textbf{Composite Score = 0.40 × Mean Accuracy + 0.40 × Mean
+F1-Score + 0.20 × Feature Reduction Ratio}}
+
+where Feature Reduction Ratio = 1 − (mean selected features / 128). This
+composite score rewards both classification performance and feature
+economy. The method achieving the highest composite score across all
+five splits is identified as the overall winner.
+
+SHAP (SHapley Additive exPlanations) analysis is performed on the best
+method to identify the top-20 most influential CNN features driving
+classification decisions. The SHAP beeswarm and bar plots provide
+interpretable feature importance rankings, enabling transparency in
+model decision-making.
+
+\hypertarget{conclusion-and-future-work}{%
+\section{6. CONCLUSION AND FUTURE
+WORK}\label{conclusion-and-future-work}}
+
+This project successfully developed and evaluated an integrated
+framework combining Federated CNN training with RL-based client
+selection and nature-inspired wrapper feature selection for MNIST digit
+classification. The system demonstrates that:
+
+\begin{itemize}
+\item
+  Federated Learning effectively trains a high-accuracy CNN model
+  without centralizing client data, preserving data privacy.
+\item
+  RL-based Q-Agent client selection improves federated convergence by
+  dynamically prioritizing high-performing clients.
+\item
+  Nature-inspired feature selectors (GA, GWO, PSO) successfully identify
+  compact, discriminative subsets of CNN features, reducing
+  dimensionality while maintaining or improving classification accuracy.
+\item
+  The composite scoring methodology provides an objective framework for
+  selecting the optimal feature selection strategy in multi-criteria
+  evaluation scenarios.
+\item
+  SHAP analysis enhances model interpretability by identifying the most
+  influential features driving digit classification decisions.
+\end{itemize}
+
+The proposed framework achieves a strong balance between
+privacy-preservation, classification accuracy, model interpretability,
+and computational efficiency --- addressing key limitations of existing
+centralized deep learning approaches.
+
+\hypertarget{future-work}{%
+\subsection{Future Work}\label{future-work}}
+
+Potential extensions of this work include:
+
+\begin{itemize}
+\item
+  Applying the framework to real-world federated scenarios with
+  heterogeneous (non-IID) client data distributions.
+\item
+  Exploring deep feature selection using neural architecture search
+  (NAS) instead of linear wrappers.
+\item
+  Extending to multi-modal datasets beyond MNIST (e.g., CIFAR-10,
+  medical imaging datasets).
+\item
+  Incorporating differential privacy mechanisms to provide formal
+  privacy guarantees during federated training.
+\item
+  Investigating online feature selection where the optimal feature
+  subset evolves dynamically across federated rounds.
+\end{itemize}
+
+\hypertarget{references}{%
+\section{REFERENCES}\label{references}}
+
+(As per their appearance in the chapters)
+
+{[}1{]} LeCun, Y., Bottou, L., Bengio, Y., \& Haffner, P. (1998).
+Gradient-based learning applied to document recognition. Proceedings of
+the IEEE, 86(11), 2278--2324.
+
+{[}2{]} McMahan, H. B., Moore, E., Ramage, D., Hampson, S., \& y Arcas,
+B. A. (2017). Communication-efficient learning of deep networks from
+decentralized data. AISTATS 2017.
+
+{[}3{]} Holland, J. H. (1975). Adaptation in Natural and Artificial
+Systems. University of Michigan Press.
+
+{[}4{]} Mirjalili, S., Mirjalili, S. M., \& Lewis, A. (2014). Grey Wolf
+Optimizer. Advances in Engineering Software, 69, 46--61.
+
+{[}5{]} Kennedy, J., \& Eberhart, R. (1995). Particle Swarm
+Optimization. Proceedings of ICNN\textquotesingle95, 4, 1942--1948.
+
+{[}6{]} Lundberg, S. M., \& Lee, S. I. (2017). A unified approach to
+interpreting model predictions. NeurIPS 30.
+
+{[}7{]} Paszke, A., et al. (2019). PyTorch: An imperative style,
+high-performance deep learning library. NeurIPS 32.
+
+{[}8{]} Pedregosa, F., et al. (2011). Scikit-learn: Machine learning in
+Python. Journal of Machine Learning Research, 12, 2825--2830.
+
+\end{document}
